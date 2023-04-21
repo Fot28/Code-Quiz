@@ -1,5 +1,9 @@
 var timerEl = document.getElementById("time");
 var startButton = document.getElementById("start");
+var startScreen = document.getElementById("start-screen");
+var questionsScreen = document.getElementById("questions");
+var endScreen = document.getElementById("end-screen");
+var finalScore = document.getElementById("final-score");
 
 // Is an array of question-answers objects.
 var questionsArray = [
@@ -57,28 +61,43 @@ var questionsArray = [
   },
 ];
 
+// On Start Quiz button click starts quizStart function
 startButton.addEventListener("click", function () {
   quizStart();
 });
 
+// Function that Starts Quiz
 function quizStart() {
   // Timer that counts down from 95
-  var timeLeft = 95;
+  var timeLeft = 5;
   timerEl.textContent = timeLeft;
+
+  //   Hide Start screen and show questions screen
+  startScreen.setAttribute("class", "hide");
+  questionsScreen.setAttribute("class", "start");
 
   // Use the `setInterval()` method to call a function to be executed every 1000 milliseconds
   var timeInterval = setInterval(function () {
     // As long as the `timeLeft` is greater than 1
-    if (timeLeft > 1) {
+    var finalScore = 0;
+    if (timeLeft > 0) {
       timerEl.textContent = timeLeft;
       timeLeft--;
     } else {
       // Once `timeLeft` gets to 0, set `timerEl` to an empty string
-      timeEl.textContent = "";
+      timerEl.textContent = "";
       // Use `clearInterval()` to stop the timer
       clearInterval(timeInterval);
-      // Call the `displayMessage()` function
+      // Call the `quizEnd()` function
       quizEnd();
     }
+    return finalScore;
   }, 1000);
+
+  return finalScore;
+}
+
+function quizEnd() {
+  questionsScreen.setAttribute("class", "hide");
+  endScreen.setAttribute("class", "start");
 }
