@@ -1,13 +1,12 @@
+var timerEl = document.getElementById("time");
+var startButton = document.getElementById("start");
+
+// Is an array of question-answers objects.
 var questionsArray = [
   {
     question:
       "The _______ attribute in HTML is used to specify the URL of the page that the hyperlink goes to.",
-    answers: [
-      ["src", false],
-      ["href", true],
-      ["alt", false],
-      ["title", false],
-    ],
+    answers: [["src"], ["href", true], ["alt"], ["title"]],
   },
   {
     question:
@@ -57,3 +56,29 @@ var questionsArray = [
     ],
   },
 ];
+
+startButton.addEventListener("click", function () {
+  quizStart();
+});
+
+function quizStart() {
+  // Timer that counts down from 95
+  var timeLeft = 95;
+  timerEl.textContent = timeLeft;
+
+  // Use the `setInterval()` method to call a function to be executed every 1000 milliseconds
+  var timeInterval = setInterval(function () {
+    // As long as the `timeLeft` is greater than 1
+    if (timeLeft > 1) {
+      timerEl.textContent = timeLeft;
+      timeLeft--;
+    } else {
+      // Once `timeLeft` gets to 0, set `timerEl` to an empty string
+      timeEl.textContent = "";
+      // Use `clearInterval()` to stop the timer
+      clearInterval(timeInterval);
+      // Call the `displayMessage()` function
+      quizEnd();
+    }
+  }, 1000);
+}
