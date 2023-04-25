@@ -6,6 +6,10 @@ var endScreen = document.getElementById("end-screen");
 var finalScoreEl = document.getElementById("final-score");
 var questionTitleEl = document.getElementById("question-title");
 var choicesEl = document.getElementById("choices");
+var feedbackEl = document.getElementById("feedback");
+var initialsEl = document.getElementById("initials").value;
+var submitButton = document.getElementById("submit");
+
 
 // Is an array of question-answers objects.
 var questionsArray = [
@@ -105,11 +109,11 @@ startButton.addEventListener("click", function () {
 });
 
 
-
+var finalScore 
 var timeLeft = 90;
+var timeInterval;
 
 function questionaire() {
-  var timeInterval;
   var score = 0;
   var i = 0;
   timerEl.textContent = timeLeft;
@@ -125,7 +129,7 @@ function questionaire() {
     // Use the `setInterval()` method to call a function to be executed every 1000 milliseconds
    timeInterval = setInterval(function () {
       // As long as the `timeLeft` is greater than 1
-      if (timeLeft > 0) {
+      if (timeLeft > 0 || i > 9) {
         timerEl.textContent = timeLeft;
         timeLeft--;
       } else {
@@ -160,87 +164,120 @@ function questionaire() {
 
     buttonAnswer1.addEventListener("click", function () {
       if (i < questionsArray.length && answers[0][1] === false) {
+        clearInterval(timeInterval);
         timeLeft -= 10;
+         feedbackEl.setAttribute("class", "feedback");
+        feedbackEl.textContent = "Wrong";
         choicesEl.innerHTML = "";
         renderQuestion(i);
-        clearInterval(timeInterval);
-      } else if (i < questionsArray.length) {
+   feedbackEl.setAttribute("class", "feedback");
+   clearInterval(timeInterval);
+        feedbackEl.textContent = "Correct";   } else if (i < questionsArray.length) {
         choicesEl.innerHTML = "";
         renderQuestion(i);
-        clearInterval(timeInterval);
       } else {
         clearInterval(timeInterval);
         quizEnd();
       }
       i++;
+      setTimeout(function () {
+      feedbackEl.setAttribute("class", "hide");
+    }, 500);
     });
 
     buttonAnswer2.addEventListener("click", function () {
       if (i < questionsArray.length && answers[1][1] === false) {
+        clearInterval(timeInterval);
         timeLeft -= 10;
+         feedbackEl.setAttribute("class", "feedback");
+        feedbackEl.textContent = "Wrong";
         choicesEl.innerHTML = "";
         renderQuestion(i);
-        clearInterval(timeInterval);
       } else if (i < questionsArray.length) {
+        clearInterval(timeInterval);
+        feedbackEl.setAttribute("class", "feedback");
+        feedbackEl.textContent = "Correct";
         choicesEl.innerHTML = "";
         renderQuestion(i);
-        clearInterval(timeInterval);
       } else {
         clearInterval(timeInterval);
         quizEnd();
       }
       i++;
+      setTimeout(function () {
+      feedbackEl.setAttribute("class", "hide");
+    }, 500);
     });
 
     buttonAnswer3.addEventListener("click", function () {
       if (i < questionsArray.length && answers[2][1] === false) {
+        clearInterval(timeInterval);
         timeLeft -= 10;
+         feedbackEl.setAttribute("class", "feedback");
+        feedbackEl.textContent = "Wrong";
         choicesEl.innerHTML = "";
         renderQuestion(i);
-        clearInterval(timeInterval);
       } else if (i < questionsArray.length) {
+        clearInterval(timeInterval);
+        feedbackEl.setAttribute("class", "feedback");
+        feedbackEl.textContent = "Correct";
         choicesEl.innerHTML = "";
         renderQuestion(i);
-        clearInterval(timeInterval);
       } else {
         clearInterval(timeInterval);
         quizEnd();
       }
       i++;
+      setTimeout(function () {
+      feedbackEl.setAttribute("class", "hide");
+    }, 500);
     });
 
     buttonAnswer4.addEventListener("click", function () {
       if (i < questionsArray.length && answers[3][1] === false) {
+        clearInterval(timeInterval);
         timeLeft -= 10;
+         feedbackEl.setAttribute("class", "feedback");
+        feedbackEl.textContent = "Wrong";
         choicesEl.innerHTML = "";
         renderQuestion(i);
-        clearInterval(timeInterval);
       } else if (i < questionsArray.length) {
+        clearInterval(timeInterval);
+        feedbackEl.setAttribute("class", "feedback");
+        feedbackEl.textContent = "Correct";
         choicesEl.innerHTML = "";
         renderQuestion(i);
-        clearInterval(timeInterval);
       } else {
         clearInterval(timeInterval);
         quizEnd();
       }
       i++;
+      setTimeout(function () {
+      feedbackEl.setAttribute("class", "hide");
+    }, 500);
     });
     console.log(timeLeft)
-    // localStorage.setItem("score",timeLeft);
-    score = timeLeft
+    finalScore  = timeLeft
     
   }
- 
- return score
+  
+  return finalScore 
 }
 
 function quizEnd() {
-  var score = questionaire();
+  clearInterval(timeInterval);
+  var finalScore = timeLeft;
   questionsScreen.setAttribute("class", "hide");
   endScreen.setAttribute("class", "start");
-  // var finalScore = localStorage.getItem(score)
-console.log(score);
+  localStorage.setItem("score",finalScore);
+  
   timerEl.textContent = "";
-  finalScoreEl.textContent = score
+  finalScoreEl.textContent = finalScore 
 
 }
+
+submitButton.addEventListener("click", function (event) {
+  event.preventDefault()
+  localStorage.setItem("myinitial",initialsEl);
+  window.location.href = "highscores.html";
+});
