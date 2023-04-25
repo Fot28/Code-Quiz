@@ -114,7 +114,7 @@ var timeLeft = 90;
 var timeInterval;
 
 function questionaire() {
-  var score = 0;
+  
   var i = 0;
   timerEl.textContent = timeLeft;
   
@@ -146,7 +146,6 @@ function questionaire() {
     var question = questionsArray[index].question;
     var answers = questionsArray[index].answers;
     
-    // console.log(answers);
     questionTitleEl.textContent = question;
 
     var buttonAnswer1 = document.createElement("button");
