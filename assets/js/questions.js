@@ -100,50 +100,48 @@ var questionsArray = [
 
 // On Start Quiz button click starts quizStart function
 startButton.addEventListener("click", function () {
-  quizStart();
+  questionaire();
+  
 });
 
-var finalScore = 0;
 
-// Function that Starts Quiz
-function quizStart() {
-  // Timer that counts down from 95
-  var timeLeft = 90;
 
+var timeLeft = 90;
+
+function questionaire() {
+  var timeInterval;
+  var score = 0;
+  var i = 0;
   timerEl.textContent = timeLeft;
-
+  
   //   Hide Start screen and show questions screen
   startScreen.setAttribute("class", "hide");
   questionsScreen.setAttribute("class", "start");
-
-  // Use the `setInterval()` method to call a function to be executed every 1000 milliseconds
-  var timeInterval = setInterval(function () {
-    // As long as the `timeLeft` is greater than 1
-    if (timeLeft > 0) {
-      timerEl.textContent = timeLeft;
-      timeLeft--;
-    } else {
-      // Once `timeLeft` gets to 0, set `timerEl` to an empty string
-      timerEl.textContent = "";
-      // Use `clearInterval()` to stop the timer
-      clearInterval(timeInterval);
-      // Call the `quizEnd()` function
-      quizEnd();
-    }
-  }, 1000);
-  questionaire();
-}
-
-function questionaire() {
-  var i = 0;
+  
   renderQuestion(i);
   i++;
-
+  
   function renderQuestion(index) {
-    console.log(i);
+    // Use the `setInterval()` method to call a function to be executed every 1000 milliseconds
+   timeInterval = setInterval(function () {
+      // As long as the `timeLeft` is greater than 1
+      if (timeLeft > 0) {
+        timerEl.textContent = timeLeft;
+        timeLeft--;
+      } else {
+        // Once `timeLeft` gets to 0, set `timerEl` to an empty string
+        timerEl.textContent = "";
+        // Use `clearInterval()` to stop the timer
+        clearInterval(timeInterval);
+        // Call the `quizEnd()` function
+        quizEnd();
+      }
+    }, 1000);
+    
+
     var question = questionsArray[index].question;
     var answers = questionsArray[index].answers;
-    var timeLeft = 100;
+    
     // console.log(answers);
     questionTitleEl.textContent = question;
 
@@ -165,10 +163,13 @@ function questionaire() {
         timeLeft -= 10;
         choicesEl.innerHTML = "";
         renderQuestion(i);
+        clearInterval(timeInterval);
       } else if (i < questionsArray.length) {
         choicesEl.innerHTML = "";
         renderQuestion(i);
+        clearInterval(timeInterval);
       } else {
+        clearInterval(timeInterval);
         quizEnd();
       }
       i++;
@@ -179,10 +180,13 @@ function questionaire() {
         timeLeft -= 10;
         choicesEl.innerHTML = "";
         renderQuestion(i);
+        clearInterval(timeInterval);
       } else if (i < questionsArray.length) {
         choicesEl.innerHTML = "";
         renderQuestion(i);
+        clearInterval(timeInterval);
       } else {
+        clearInterval(timeInterval);
         quizEnd();
       }
       i++;
@@ -193,10 +197,13 @@ function questionaire() {
         timeLeft -= 10;
         choicesEl.innerHTML = "";
         renderQuestion(i);
+        clearInterval(timeInterval);
       } else if (i < questionsArray.length) {
         choicesEl.innerHTML = "";
         renderQuestion(i);
+        clearInterval(timeInterval);
       } else {
+        clearInterval(timeInterval);
         quizEnd();
       }
       i++;
@@ -207,19 +214,33 @@ function questionaire() {
         timeLeft -= 10;
         choicesEl.innerHTML = "";
         renderQuestion(i);
+        clearInterval(timeInterval);
       } else if (i < questionsArray.length) {
         choicesEl.innerHTML = "";
         renderQuestion(i);
+        clearInterval(timeInterval);
       } else {
+        clearInterval(timeInterval);
         quizEnd();
       }
       i++;
     });
+    console.log(timeLeft)
+    // localStorage.setItem("score",timeLeft);
+    score = timeLeft
+    
   }
+ 
+ return score
 }
 
 function quizEnd() {
+  var score = questionaire();
   questionsScreen.setAttribute("class", "hide");
   endScreen.setAttribute("class", "start");
-  finalScoreEl.textContent = finalScore;
+  // var finalScore = localStorage.getItem(score)
+console.log(score);
+  timerEl.textContent = "";
+  finalScoreEl.textContent = score
+
 }
